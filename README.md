@@ -12,6 +12,25 @@
 ![Project demo](https://img.shields.io/badge/Inspiration-Monday%20and%20Wordpress%20integration-0074a2?style=for-the-badge&logo=)
 <br>
 
+### Getting Started
+
+Users will also need to install an additional WordPress plugin on their WordPress website and enter asked details during integration on monday.
+
+Install the plugin
+
+| Plugin | Download file |
+| ------ | ------ |
+| Monday-Wordpress-Integration | [Plugin](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1/wordpress-monday-master.zip) |
+
+### Steps for Installation
+
+1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1/wordpress-monday-master.zip)** .
+2. Install the plugin in wordpress by uploading the downloaded folder 
+3. Go to monday.com and choose the desired integration from our app.
+4. Go to wordpress settings > Monday Integration > Integration
+5. Copy the API Key and secret and paste it on the monday integration page and enter site URL without / . eg https://example.com
+6. Authorize the app
+7. Add integration to board
 
 ## Background 
 
@@ -69,25 +88,7 @@ e. Add the preview post link.
 ## How does it works?
 The integration uses Monday V2 API with Authorization, custom triggers and actions, and WordPress Rest API. Since WordPress users can have any site, so to have a standard backend app, we have created a middleware application between Monday and WordPress that runs all the transaction on Standard URL’s.
 
-### Getting Started
 
-Users will also need to install an additional WordPress plugin on their WordPress website and enter asked details during integration.
-
-Install the plugin
-
-| Plugin | Download file |
-| ------ | ------ |
-| GitHub | [Plugin](https://github.com/twimbit/wordpress-monday) |
-
-### Steps for Installation
-
-1. Download this **[.zip file](https://github.com/twimbit/wordpress-monday)** .
-2. Login to your WordPress Dashboard.
-3. In your WordPress Admin Menu, go to Plugins > Add New.
-4. Click on the Upload Plugin button found on the top left corner of the page.
-5. Click on Browse, select the .zip file of your plugin in your computer, and click the Install Now button.
-6. At this point, the plugin is installed. You can click on the Activate Plugin link to work with it.
-Well done, you have managed to install and activate your WordPress plugin!
 
 
 ### Vulnerability disclosure 🧑🏼‍💻
