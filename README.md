@@ -45,12 +45,12 @@ This integration lets users synchronize there WordPress site with Monday to crea
 - [Benefits](#Features)
 - [How does it works?](#how-does-it-works?)
     - [Date we store](#data-we-store)
-    - [Vulnerability disclosure](#vulnerability-disclosure)
+    - [Vulnerability disclosure](#vulnerability-disclosure-)
     - [Contributing](#contributing)
-- [Future Scope](#future-scope-🧐)
-    - [Collaboration](#collaboration)
+- [Future Scope](#future-scope-)
+    - [Collaboration](#collaboration-)
     - [What's next?](#what's-next-for-wordPress-monday-integration)
-- [Core team](#core-team)
+- [Credits](#Credits-)
 
 
 ## Features
@@ -102,7 +102,7 @@ Collaborate with us on creating more integrations and future scopes for monday a
 3. Connecting multiple WordPress sites with multiple Monday's board
 4. Building a community around it.
 
-#### Core team 👨‍👦‍👦
+#### Credits 👨‍👦‍👦
 
 | Contributors                                           |
 | ------------------------------------------------------------ |
