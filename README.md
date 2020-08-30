@@ -14,7 +14,6 @@
 | Plugin | Download file |
 | ------ | ------ |
 | Monday Wordpress Integration | [Plugin](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip) |
-| Release Page | [Latest 0.1-beta](https://github.com/twimbit/monday-wordpress-integration/releases) |
 
 ### Steps for Installation
 
