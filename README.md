@@ -14,11 +14,11 @@
 | Plugin | Download file |
 | ------ | ------ |
 | Monday Wordpress Integration | [Plugin](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip) |
-| Release Page | [Plugin](https://github.com/twimbit/monday-wordpress-integration/releases) |
+| Release Page | [Latest 0.1-beta](https://github.com/twimbit/monday-wordpress-integration/releases) |
 
 ### Steps for Installation
 
-1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1/wordpress-monday-master.zip)** .
+1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip)** .
 2. Install the plugin in wordpress by uploading the downloaded folder 
 3. Go to monday.com and choose the desired integration from our app.
 4. Go to `wordpress settings > Monday Integration > Integration`
