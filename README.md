@@ -5,18 +5,11 @@
 </div>
 <br>
 
-[![Twimbit](https://img.shields.io/badge/Powered%20by%20%7C-Twimbit-ef6d6c)](https://twimbit.com/?)
+[![Twimbit](https://img.shields.io/badge/Powered%20by%20%7C-Twimbit-ef6d6c)](https://twimbit.com)
 
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/twimbit/wordpress-monday) [![Project demo](https://img.shields.io/youtube/views/OlHK9WsZCOY?style=social)](https://www.youtube.com/watch?v=OlHK9WsZCOY) 
 
-![Project demo](https://img.shields.io/badge/Inspiration-Monday%20and%20Wordpress%20integration-0074a2?style=for-the-badge&logo=)
-<br>
-
-### Getting Started
-
-Users will also need to install an additional WordPress plugin on their WordPress website and enter asked details during integration on monday.
-
-Install the plugin
+## Getting Started
 
 | Plugin | Download file |
 | ------ | ------ |
@@ -27,10 +20,9 @@ Install the plugin
 1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1/wordpress-monday-master.zip)** .
 2. Install the plugin in wordpress by uploading the downloaded folder 
 3. Go to monday.com and choose the desired integration from our app.
-4. Go to wordpress settings > Monday Integration > Integration
-5. Copy the API Key and secret and paste it on the monday integration page and enter site URL without / . eg https://example.com
+4. Go to `wordpress settings > Monday Integration > Integration`
+5. Copy the `API Key` and `API secret` and paste it on the monday integration page and enter site URL without / . eg https://example.com
 6. Authorize the app
-7. Add integration to board
 
 ## Background 
 
@@ -40,7 +32,7 @@ Twimbit is a technology company giving market research. We use WordPress as a co
 Till we discovered the inefficiencies in the system. A lot of back and forth between Monday and WordPress in which users had to manually update things. 
 
 ### The opportunity 
-Integrate with Monday API V2. As we built it on top of WordPress, we realized that we could extract the core and make it an open service for anyone using WordPress.
+Integrate with Monday API V2. As we built it on top of WordPress, we realized that we could extract the core and make it an open service for anyone using WordPress & Monday.
 
 
 ## Introduction
@@ -50,10 +42,9 @@ This integration lets users synchronize there WordPress site with Monday to crea
 
 - [Introduction](#introduction)
 - [Table of Contents](#table-of-contents)
-- [Benefits](#benefits)
+- [Benefits](#Features)
 - [How does it works?](#how-does-it-works?)
-    - [Getting Started](#getting-started)
-    - [Installation Documentation](#steps-for-installation)
+    - [Date we store](#data-we-store)
     - [Vulnerability disclosure](#vulnerability-disclosure)
     - [Contributing](#contributing)
 - [Future Scope](#future-scope-🧐)
@@ -62,7 +53,7 @@ This integration lets users synchronize there WordPress site with Monday to crea
 - [Core team](#core-team)
 
 
-## Benefits
+## Features
 
 ### Monday users would be able to do following Integrations -
 1.  When a WordPress Post is created, create a new item and sync future changes.
@@ -88,14 +79,16 @@ e. Add the preview post link.
 ## How does it works?
 The integration uses Monday V2 API with Authorization, custom triggers and actions, and WordPress Rest API. Since WordPress users can have any site, so to have a standard backend app, we have created a middleware application between Monday and WordPress that runs all the transaction on Standard URL’s.
 
-
-
+### Data we store
+To ensure consistent authorization we store a copy of Monday Account Id, user ID along with the board id on which integration is added. We also store the subscirption id which is used for removing integrations. To direct the access to Users wordpress and authenticate it, we store copy of monday wordpress integration plugin API key and API secret. We dont share any information with any third party. We don't store your content or transaction as they directly performed between wordpress and monday.
 
 ### Vulnerability disclosure 🧑🏼‍💻
 
 Monday-wordpress integration is the open source project. We welcome security research on this [open source project](https://github.com/twimbit/wordpress-monday/issues) .
 
 ### Contributing
+Raise a problem or bug [Here](https://github.com/twimbit/wordpress-monday/issues)
+Request a feature [Here](https://github.com/twimbit/wordpress-monday/issues)
 We encourage you to contribute to this [project!!](https://github.com/twimbit/monday-wordpress-integration/pulls) ❤️ 
 
 ## Future Scope 🧐
@@ -111,7 +104,7 @@ Collaborate with us on creating more integrations and future scopes for monday a
 
 #### Core team 👨‍👦‍👦
 
-| GitHub Usernames                                             |
+| Contributors                                           |
 | ------------------------------------------------------------ |
 | Aman Sharma [(@amanintech)](https://github.com/amanintech)   |
 | Siddhant Kumar [(@siddhantdante)](https://github.com/siddhantdante) | 
