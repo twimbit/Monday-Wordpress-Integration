@@ -12,8 +12,16 @@
 ![Project demo](https://img.shields.io/badge/Inspiration-Monday%20and%20Wordpress%20integration-0074a2?style=for-the-badge&logo=)
 <br>
 
-In our startup, we were using WordPress as a content publishing platform. Working with a team of people we found monday.com could be a great tool to manage the publishing, collaborate, and keep everything on track. So, we set-up a Monday board with automation and workflow that was suited for us. Monday soon we realized there was a lot of back and forth between Monday and WordPress in which users had to manually update things.
-We saw this as an opportunity and started integrating with Monday API V2. As we built it on top of WordPress, we realized that we can actually extract the core and make it an open service for anyone using WordPress. 
+
+## Background 
+
+Twimbit is a technology company giving market research. We use WordPress as a content publishing platform. But how can we manage our publications and collaborate? Monday.com was the answer. So, we set-up Monday boards with automated workflows for our use case. Life was meant to be a simple handshake between content publishing and content management. 
+
+### The Problem  
+Till we discovered the inefficiencies in the system. A lot of back and forth between Monday and WordPress in which users had to manually update things. 
+
+### The opportunity 
+Integrate with Monday API V2. As we built it on top of WordPress, we realized that we could extract the core and make it an open service for anyone using WordPress.
 
 
 ## Introduction
@@ -29,7 +37,7 @@ This integration lets users synchronize there WordPress site with Monday to crea
     - [Installation Documentation](#steps-for-installation)
     - [Vulnerability disclosure](#vulnerability-disclosure)
     - [Contributing](#contributing)
-- [Future Scope](#future-scope)
+- [Future Scope](#future-scope-🧐)
     - [Collaboration](#collaboration)
     - [What's next?](#what's-next-for-wordPress-monday-integration)
 - [Core team](#core-team)
@@ -38,14 +46,14 @@ This integration lets users synchronize there WordPress site with Monday to crea
 ## Benefits
 
 ### Monday users would be able to do following Integrations -
-1.  When a WordPress Post is created create a new item and sync future changes.
+1.  When a WordPress Post is created, create a new item and sync future changes.
 Additionally -
 a. Assign user if exists.
 b. Assign Tags and categories using tags fields.
 c. Load Comments as updates to the posts.
 d. Synchronize post status and Monday status
 e. Add the preview post link.
-2.  When a WordPress Page is created create a new item and sync future changes.
+2.  When a WordPress Page is created, create a new item and sync future changes.
 
 3. When a new Monday item is created, Create a Draft post in WordPress.
 
@@ -59,7 +67,7 @@ e. Add the preview post link.
 
 
 ## How does it works?
-The integration uses Monday V2 API with Authorization, custom triggers and actions, and WordPress Rest API. Since WordPress users can have any site, so to have a standard backend app, we have created a middleware application between Monday and WordPress that runs all the transaction on Standard URL’s. Price yet to be decided.
+The integration uses Monday V2 API with Authorization, custom triggers and actions, and WordPress Rest API. Since WordPress users can have any site, so to have a standard backend app, we have created a middleware application between Monday and WordPress that runs all the transaction on Standard URL’s.
 
 ### Getting Started
 
@@ -97,16 +105,17 @@ Collaborate with us on creating more integrations and future scopes for monday a
 #### What's next for WordPress - Monday Integration
 1. Building more integrations 
 2. Implemented Integration mapping 
-3. Connecting multiple WordPress sites with multiple Monday's
+3. Connecting multiple WordPress sites with multiple Monday's board
 4. Building a community around it.
 
 #### Core team 👨‍👦‍👦
 
-| GitHub Usernames                                             | Domain     |
-| ------------------------------------------------------------ | ---------- |
-| Aman Sharma [(@amanintech)](https://github.com/amanintech)   | Full Stack |
-| Siddhant Kumar [(@siddhantdante)](https://github.com/siddhantdante) | Full Stack |
-| Gaurav Kumar [(icon-gaurav)](https://github.com/icon-gaurav) | Full Stack |
+| GitHub Usernames                                             |
+| ------------------------------------------------------------ |
+| Aman Sharma [(@amanintech)](https://github.com/amanintech)   |
+| Siddhant Kumar [(@siddhantdante)](https://github.com/siddhantdante) | 
+| Gaurav Kumar [(@icon-gaurav)](https://github.com/icon-gaurav) |
+| Shalini Bose [(@shalinibose)](https://github.com/shalinibose) 
 
 
 ### License
