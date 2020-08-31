@@ -68,6 +68,7 @@ To ensure consistent authorization we store a copy of Monday Account Id, user ID
 Monday-wordpress integration is the open source project. We welcome security research on this [open source project](https://github.com/twimbit/wordpress-monday/issues) .
 
 ### Contributing
+- Read the contributing guidelines [here](https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/CONTRIBUTING.md)
 - Raise a problem or bug [Here](https://github.com/twimbit/Monday-Wordpress-Integration/issues/new?assignees=&labels=&template=bug_report.md&title=)
 - Request a feature [Here](https://github.com/twimbit/Monday-Wordpress-Integration/issues/new?assignees=&labels=&template=feature_request.md&title=)
 - We encourage you to contribute to this [project!!](https://github.com/twimbit/monday-wordpress-integration/pulls) ❤️ 
