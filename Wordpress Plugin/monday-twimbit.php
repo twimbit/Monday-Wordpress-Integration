@@ -230,10 +230,8 @@ function change_post_status( $req ) {
 	$app_key    = $req['APIKey'];
 	$app_secret = $req['APISecret'];
 
-	$post_status  = $req['status'];
-	$post_item_id = $req['item_id'];
-
-	error_log( print_r( $req, true ) );
+	$post_status  = $req['payload']['inboundFieldValues']['statusColumnValue']['label']['index'];
+	$post_item_id = $req['payload']['inboundFieldValues']['itemId'];
 
 	$check = check_auth( $app_key, $app_secret );
 
@@ -245,17 +243,13 @@ function change_post_status( $req ) {
 		} else {
 			$wp_post_status = 'draft';
 		}
-
-		if ( empty( $post_id ) ) {
-			wp_send_json( array( 'success' => false, 'error' => 'wp post does not exist' ) );
-		}
-
-		wp_insert_post( array(
+		remove_action( 'save_post_post', 'update_or_create' );
+		wp_update_post( array(
 			'post_status' => $wp_post_status,
 			'ID'          => $post_id
 		) );
 
-
+		add_action( 'save_post_post', 'update_or_create' );
 		wp_send_json( array( 'success' => true ) );
 	}
 
