@@ -30,17 +30,24 @@ This integration lets users synchronize there WordPress site with Monday to crea
 
 ## Table of Contents
 
-- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+  - [Introduction](#introduction)
+  - [Steps for Installation](#steps-for-installation)
 - [Table of Contents](#table-of-contents)
-- [Benefits](#Features)
+- [Features](#Features)
 - [How does it works?](#how-does-it-works?)
     - [Date we store](#data-we-store)
     - [Vulnerability disclosure](#vulnerability-disclosure-)
     - [Contributing](#contributing)
+- [Background](#background)
+  - [The Problem](#the-problem)
+  - [The Opportunity](#the-opportunity)
 - [Future Scope](#future-scope-)
     - [Collaboration](#collaboration-)
     - [What's next?](#what's-next-for-wordPress-monday-integration)
 - [Credits](#Credits-)
+- [License](#license)
+
 
 
 ## Features
