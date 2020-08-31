@@ -36,7 +36,7 @@ This integration lets users synchronize there WordPress site with Monday to crea
 - [Table of Contents](#table-of-contents)
 - [Features](#Features)
 - [How does it works?](#how-does-it-works?)
-    - [Date we store](#data-we-store)
+    - [Data we store](#data-we-store)
     - [Vulnerability disclosure](#vulnerability-disclosure-)
     - [Contributing](#contributing)
 - [Background](#background)
