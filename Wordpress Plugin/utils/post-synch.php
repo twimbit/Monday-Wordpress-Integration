@@ -62,11 +62,14 @@ function sync_post() {
 			'post_link' => array( 'url' => get_post_permalink( $post->ID ), 'text' => $post->post_title ),
 		);
 
-		foreach ( get_board_ids() as $board_id ) {
-
-			if ( get_board_action( $board_id->boardId ) == 'create_post' && $post->post_type == 'post' ) {
+		if ( $post->post_type == 'post' ) {
+			foreach ( get_board_ids( 'create_post' ) as $board_id ) {
 				update_or_create_content_auto_synch( $board_id, $post_array, $post );
-			} else if ( get_board_action( $board_id->boardId ) == 'create_page' && $post->post_type == 'page' ) {
+			}
+		}
+
+		if ( $post->post_type == 'page' ) {
+			foreach ( get_board_ids( 'create_page' ) as $board_id ) {
 				update_or_create_content_auto_synch( $board_id, $post_array, $post );
 			}
 		}

@@ -185,10 +185,14 @@ function create_monday_post_item( $postId, $post_status ) {
 	);
 
 
-	foreach ( get_board_ids() as $board_id ) {
-		if ( get_board_action( $board_id->boardId ) == 'create_post' && $post->post_type == 'post' ) {
+	if ( $post->post_type == 'post' ) {
+		foreach ( get_board_ids( 'create_post' ) as $board_id ) {
 			update_or_create_content( $board_id, $post_array, $post_status, $post );
-		} else if ( get_board_action( $board_id->boardId ) == 'create_page' && $post->post_type == 'page' ) {
+		}
+	}
+
+	if ( $post->post_type == 'page' ) {
+		foreach ( get_board_ids( 'create_page' ) as $board_id ) {
 			update_or_create_content( $board_id, $post_array, $post_status, $post );
 		}
 	}
@@ -288,6 +292,8 @@ function update_or_create_content( $board_id, $post_array, $post_status, $post )
 	global $monday_mutation;
 
 	$sub_id = get_subscription_id( $board_id->boardId );
+
+	sync_post_comments( $post->ID );
 
 	//monday board columns
 	$board_columns     = get_option( 'monday_' . $board_id->boardId );

@@ -131,7 +131,31 @@ function register_monday_rest_points() {
 		'monday', '/subscribe/create_post',
 		array(
 			'methods'  => array( 'POST' ),
-			'callback' => 'subscribe_post',
+			'callback' => 'subscribe_action',
+		)
+	);
+
+	register_rest_route(
+		'monday', '/subscribe/create_page',
+		array(
+			'methods'  => array( 'POST' ),
+			'callback' => 'subscribe_action',
+		)
+	);
+
+	register_rest_route(
+		'monday', '/subscribe/create_user',
+		array(
+			'methods'  => array( 'POST' ),
+			'callback' => 'subscribe_action',
+		)
+	);
+
+	register_rest_route(
+		'monday', '/subscribe/create_comment',
+		array(
+			'methods'  => array( 'POST' ),
+			'callback' => 'subscribe_action',
 		)
 	);
 
@@ -212,7 +236,9 @@ function create_post( $req ) {
 		if ( empty( $user_id ) ) {
 			$wp_user_id = 1;
 		}
+
 		remove_action( 'save_post_post', 'update_or_create' );
+
 		if ( empty( get_check_item_id( $itemId ) ) ) {
 			$post_id = wp_insert_post( array( 'post_title' => $monday_item['name'], 'post_author' => $wp_user_id ) );
 			create_monday_post( '', $itemId, $post_id, $monday_item['board']['id'] );
@@ -307,7 +333,7 @@ function authorize( $req ) {
 }
 
 //call back subscribe route function
-function subscribe_post( $req ) {
+function subscribe_action( $req ) {
 
 	//	request data
 	$clientId = $req['ClientId'];
@@ -412,22 +438,21 @@ function update_or_create( $post_id ) {
 }
 
 //when a new user registers
-//add_action( 'user_register', 'monday_create_user_item', 10, 1 );
+add_action( 'user_register', 'monday_create_user_item', 10, 1 );
 function monday_create_user_item( $userId ) {
 	global $monday_mutation;
-	foreach ( get_board_ids() as $board_id ) {
+	foreach ( get_board_ids( 'create_user' ) as $board_id ) {
 		$itemId = $monday_mutation->create_item( $board_id->boardId, array(), get_author_username( $userId ) );
 	}
 	synch_monday_authors();
 }
 
 //monday create comment item
-//add_action( 'comment_post', 'monday_create_comment_item', 10, 3 );
+add_action( 'comment_post', 'monday_create_comment_item', 10, 3 );
 function monday_create_comment_item( $commentId, $status, $data ) {
 	global $monday_mutation;
-	foreach ( get_board_ids() as $board_id ) {
+	foreach ( get_board_ids( 'create_comment' ) as $board_id ) {
 		$itemId = $monday_mutation->create_item( $board_id->boardId, array(), $data['comment_content'] );
 		add_comment_meta( $commentId, 'comment_item_id', $itemId['data']['create_item']['id'] );
 	}
 }
-
