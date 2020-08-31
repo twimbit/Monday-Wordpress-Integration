@@ -7,13 +7,12 @@
 
 [![Twimbit](https://img.shields.io/badge/Powered%20by%20%7C-Twimbit-ef6d6c)](https://twimbit.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/twimbit/wordpress-monday) 
 
-## Getting Started
+
 <a href="https://auth.monday.com/oauth2/authorize?client_id=e8ca407267da543d1a1496123679ea4f&response_type=install"> <img alt="Add to monday.com" height="42" src="https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/Tal/4b5d9548-0598-436e-a5b6-9bc5f29ee1d9_Group12441.png" /> </a>
 
-| Plugin | Download file |
-| ------ | ------ |
-| Monday Wordpress Integration | [Plugin](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip) |
+![GitHub All Releases](https://img.shields.io/github/downloads/twimbit/Monday-Wordpress-Integration/total?label=Download%20%20Wordpress%20Plugin)
 
+## Getting Started
 ## Introduction
 This integration lets users synchronize there WordPress site with Monday to create efficient workflows and automation. Monday users can synchronize posts, pages, users, comments, and taxonomies from WordPress to Monday and vice versa. This opens a new window of automation opportunity for publishers, content creators, or simply anyone using WordPress to create custom workflows and connect various other platforms without any additional plugin installation on WordPress.
 
