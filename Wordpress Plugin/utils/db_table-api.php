@@ -202,6 +202,19 @@ function get_board_action( $boardId ) {
 	return $results[0]->action;
 }
 
+//check post item Id exist
+function get_check_item_id( $itemId ) {
+	global $wpdb;
+	$wp_table_name = $wpdb->prefix . 'monday_post';
+	$results       = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE itemId='$itemId'" );
+
+	if ( empty( $results ) ) {
+		return '';
+	}
+
+	return $results[0]->itemId;
+}
+
 /*<================== Database write operations =======================>*/
 
 //insert data in monday table
