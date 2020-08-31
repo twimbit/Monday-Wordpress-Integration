@@ -131,7 +131,31 @@ function register_monday_rest_points() {
 		'monday', '/subscribe/create_post',
 		array(
 			'methods'  => array( 'POST' ),
-			'callback' => 'subscribe_post',
+			'callback' => 'subscribe_action',
+		)
+	);
+
+	register_rest_route(
+		'monday', '/subscribe/create_page',
+		array(
+			'methods'  => array( 'POST' ),
+			'callback' => 'subscribe_action',
+		)
+	);
+
+	register_rest_route(
+		'monday', '/subscribe/create_user',
+		array(
+			'methods'  => array( 'POST' ),
+			'callback' => 'subscribe_action',
+		)
+	);
+
+	register_rest_route(
+		'monday', '/subscribe/create_comment',
+		array(
+			'methods'  => array( 'POST' ),
+			'callback' => 'subscribe_action',
 		)
 	);
 
@@ -204,6 +228,7 @@ function create_post( $req ) {
 
 	if ( $check ) {
 
+
 		global $monday_query;
 		$monday_item = $monday_query->get_monday_item( $itemId );
 
@@ -211,9 +236,14 @@ function create_post( $req ) {
 		if ( empty( $user_id ) ) {
 			$wp_user_id = 1;
 		}
-		$post_id = wp_insert_post( array( 'post_title' => $monday_item['name'], 'post_author' => $wp_user_id ) );
-		create_monday_post( '', $itemId, $post_id, $monday_item['board']['id'] );
 
+		remove_action( 'save_post_post', 'update_or_create' );
+
+		if ( empty( get_check_item_id( $itemId ) ) ) {
+			$post_id = wp_insert_post( array( 'post_title' => $monday_item['name'], 'post_author' => $wp_user_id ) );
+			create_monday_post( '', $itemId, $post_id, $monday_item['board']['id'] );
+		}
+		add_action( 'save_post_post', 'update_or_create' );
 		wp_send_json( array( 'success' => true ) );
 	}
 
@@ -226,10 +256,8 @@ function change_post_status( $req ) {
 	$app_key    = $req['APIKey'];
 	$app_secret = $req['APISecret'];
 
-	$post_status  = $req['status'];
-	$post_item_id = $req['item_id'];
-
-	error_log( print_r( $req, true ) );
+	$post_status  = $req['payload']['inboundFieldValues']['statusColumnValue']['label']['index'];
+	$post_item_id = $req['payload']['inboundFieldValues']['itemId'];
 
 	$check = check_auth( $app_key, $app_secret );
 
@@ -241,17 +269,13 @@ function change_post_status( $req ) {
 		} else {
 			$wp_post_status = 'draft';
 		}
-
-		if ( empty( $post_id ) ) {
-			wp_send_json( array( 'success' => false, 'error' => 'wp post does not exist' ) );
-		}
-
-		wp_insert_post( array(
+		remove_action( 'save_post_post', 'update_or_create' );
+		wp_update_post( array(
 			'post_status' => $wp_post_status,
 			'ID'          => $post_id
 		) );
 
-
+		add_action( 'save_post_post', 'update_or_create' );
 		wp_send_json( array( 'success' => true ) );
 	}
 
@@ -309,7 +333,7 @@ function authorize( $req ) {
 }
 
 //call back subscribe route function
-function subscribe_post( $req ) {
+function subscribe_action( $req ) {
 
 	//	request data
 	$clientId = $req['ClientId'];
@@ -414,20 +438,20 @@ function update_or_create( $post_id ) {
 }
 
 //when a new user registers
-//add_action( 'user_register', 'monday_create_user_item', 10, 1 );
+add_action( 'user_register', 'monday_create_user_item', 10, 1 );
 function monday_create_user_item( $userId ) {
 	global $monday_mutation;
-	foreach ( get_board_ids() as $board_id ) {
+	foreach ( get_board_ids( 'create_user' ) as $board_id ) {
 		$itemId = $monday_mutation->create_item( $board_id->boardId, array(), get_author_username( $userId ) );
 	}
 	synch_monday_authors();
 }
 
 //monday create comment item
-//add_action( 'comment_post', 'monday_create_comment_item', 10, 3 );
+add_action( 'comment_post', 'monday_create_comment_item', 10, 3 );
 function monday_create_comment_item( $commentId, $status, $data ) {
 	global $monday_mutation;
-	foreach ( get_board_ids() as $board_id ) {
+	foreach ( get_board_ids( 'create_comment' ) as $board_id ) {
 		$itemId = $monday_mutation->create_item( $board_id->boardId, array(), $data['comment_content'] );
 		add_comment_meta( $commentId, 'comment_item_id', $itemId['data']['create_item']['id'] );
 	}

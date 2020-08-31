@@ -3,12 +3,18 @@
 /*<================== Database get operations =======================>*/
 
 //get board ids
-function get_board_ids() {
+function get_board_ids( $action = '' ) {
 
 	global $wpdb;
 	$wp_table_name = $wpdb->prefix . 'monday_action';
+	if ( empty( $action ) ) {
 
-	$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name" );
+		$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name" );
+	} else {
+
+		$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name WHERE action='$action'" );
+	}
+
 
 	if ( empty( $results ) ) {
 		return '';
@@ -190,7 +196,7 @@ function get_sub_actions( $action ) {
 }
 
 //get board action
-function get_board_action( $boardId ) {
+function get_board_action( $boardId, $action ) {
 	global $wpdb;
 	$wp_table_name = $wpdb->prefix . 'monday_action';
 	$results       = $wpdb->get_results( "SELECT action FROM $wp_table_name WHERE boardId=$boardId" );
@@ -199,7 +205,26 @@ function get_board_action( $boardId ) {
 		return '';
 	}
 
-	return $results[0]->action;
+	foreach ( $results as $result ) {
+		if ( $result->action == $action ) {
+			return $action;
+		}
+	}
+
+	return '';
+}
+
+//check post item Id exist
+function get_check_item_id( $itemId ) {
+	global $wpdb;
+	$wp_table_name = $wpdb->prefix . 'monday_post';
+	$results       = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE itemId='$itemId'" );
+
+	if ( empty( $results ) ) {
+		return '';
+	}
+
+	return $results[0]->itemId;
 }
 
 /*<================== Database write operations =======================>*/
