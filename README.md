@@ -55,30 +55,14 @@ This integration lets users synchronize there WordPress site with Monday to crea
 
 
 ## Features
-
-### Monday users would be able to do following Integrations -
-1.  When a WordPress Post is created, create a new item and sync future changes.
-Additionally -
-a. Assign user if exists.
-b. Assign Tags and categories using tags fields.
-c. Load Comments as updates to the posts.
-d. Synchronize post status and Monday status
-e. Add the preview post link.
-2.  When a WordPress Page is created, create a new item and sync future changes.
-
-3. When a new Monday item is created, Create a Draft post in WordPress.
-
-4. When an item status changes to something, change WordPress post status to something
-
-5. When a new WordPress user is added, create a new item on Monday
-
-6. When a new Comment is added create a new item.
-
->  ......  Many more integrations coming soon.
-
+### Available Integrations
+<img src="https://github.com/twimbit/monday-wordpress-integration/blob/master/features.png" object-fit="cover" width="100%">
 
 ## How does it works?
 The integration uses Monday V2 API with Authorization, custom triggers and actions, and WordPress Rest API. Since WordPress users can have any site, so to have a standard backend app, we have created a middleware application between Monday and WordPress that runs all the transaction on Standard URL’s.
+
+Note- For now whenever you add an integration, we automatically create required columns and sync them with wordpress fields ( This is going to be replaced with integration mapping).
+
 
 ### Data we store
 To ensure consistent authorization we store a copy of Monday Account Id, user ID along with the board id on which integration is added. We also store the subscirption id which is used for removing integrations. To direct the access to Users wordpress and authenticate it, we store copy of monday wordpress integration plugin API key and API secret. We dont share any information with any third party. We don't store your content or transaction as they directly performed between wordpress and monday.
