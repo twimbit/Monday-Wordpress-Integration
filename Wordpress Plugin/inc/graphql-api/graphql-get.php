@@ -69,6 +69,24 @@ class MONDAY_GRAPHQL_QUERY {
 		return $result['data']['users'];
 	}
 
+	//get monday item
+	public function get_monday_item( $itemId ) {
+		$query  = 'query MyQuery {
+  items(ids: ' . $itemId . ') {
+    name
+    creator {
+      id
+    }
+    board {
+      id
+    }
+  }
+}';
+		$result = $this->request_monday( $query );
+
+		return $result['data']['items'][0];
+	}
+
 }
 
 global $token;

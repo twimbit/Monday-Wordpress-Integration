@@ -69,9 +69,10 @@ function monday_install() {
 		"CREATE TABLE $table_name[1] (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		subscription_id bigint(20) NOT NULL,
+		subscription_id bigint(20),
 		itemId int(11) NOT NULL,
 		postId int(11) NOT NULL,
+		boardId int(11) NOT NULL,
 		PRIMARY KEY  (id)
 	) $charset_collate;",
 		"CREATE TABLE $table_name[2] (
@@ -196,22 +197,22 @@ function create_post( $req ) {
 	$app_key    = $req['APIKey'];
 	$app_secret = $req['APISecret'];
 
-	$post_title = $req['title'];
-	$user_id    = $req['user_id'];
-	$item_id    = $req['itemId'];
-	$sub_id     = $req['subscriptionId'];
+	$itemId = $req['payload']['inboundFieldValues']['itemId'];
 
-	error_log( print_r( $req, true ) );
 
 	$check = check_auth( $app_key, $app_secret );
 
 	if ( $check ) {
-		$wp_user_id = get_wp_user_id( $user_id );
+
+		global $monday_query;
+		$monday_item = $monday_query->get_monday_item( $itemId );
+
+		$wp_user_id = get_wp_user_id( $monday_item['creator']['id'] );
 		if ( empty( $user_id ) ) {
 			$wp_user_id = 1;
 		}
-		$post_id = wp_insert_post( array( 'post_title' => $post_title, 'post_author' => $wp_user_id ) );
-		create_monday_post( $sub_id, $item_id, $post_id );
+		$post_id = wp_insert_post( array( 'post_title' => $monday_item['name'], 'post_author' => $wp_user_id ) );
+		create_monday_post( '', $itemId, $post_id, $monday_item['board']['id'] );
 
 		wp_send_json( array( 'success' => true ) );
 	}
@@ -390,10 +391,17 @@ function update_or_create( $post_id ) {
 	$post_update = strtotime( $post->post_modified );
 
 
-
 	//for post create
 	if ( $post_date == $post_update && $post->post_status != 'auto-draft' ) {
-		create_monday_post_item( $post_id, 'create' );
+		if ( ! empty( get_post_meta( $post->ID, 'post_status' ) ) ) {
+			create_monday_post_item( $post_id, 'update' );
+		} else {
+			create_monday_post_item( $post_id, 'create' );
+		}
+
+		if ( $post->post_status == 'draft' ) {
+			update_post_meta( $post->ID, 'post_status', 'draft' );
+		}
 	} //for post update
 	else if ( $post->post_status != 'auto-draft' && $post->post_status != 'trash' ) {
 		create_monday_post_item( $post_id, 'update' );

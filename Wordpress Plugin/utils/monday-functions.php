@@ -152,7 +152,6 @@ function create_monday_post_item( $postId, $post_status ) {
 	// get post categories
 	$categories = get_post_categories_array( $post->ID );
 
-
 	if ( $post->post_status == 'publish' ) {
 		$status = 1;
 	} else {
@@ -251,7 +250,7 @@ function sync_post_comments( $postId ) {
 function create_monday_post_item_function( $boardId, $post_post_array, $post_title, $sub_id, $postId ) {
 	global $monday_mutation;
 	$item_id_create = $monday_mutation->create_item( $boardId, $post_post_array, $post_title )['data']['create_item']['id'];
-	create_monday_post( $sub_id, $item_id_create, $postId );
+	create_monday_post( $sub_id, $item_id_create, $postId, $boardId );
 }
 
 //get post tags
@@ -286,7 +285,6 @@ function get_post_categories_array( $postId ) {
 function update_or_create_content( $board_id, $post_array, $post_status, $post ) {
 	$post_post_array = array();
 
-
 	global $monday_mutation;
 
 	$sub_id = get_subscription_id( $board_id->boardId );
@@ -305,26 +303,25 @@ function update_or_create_content( $board_id, $post_array, $post_status, $post )
 	}
 
 	if ( $post_status == 'create' ) {
+		//echo 'create in';
+
 		$item_id = $monday_mutation->create_item( $board_id->boardId, $post_post_array, $post->post_title )['data']['create_item']['id'];
-		create_monday_post( $sub_id, $item_id, $post->ID );
+		create_monday_post( $sub_id, $item_id, $post->ID, $board_id->boardId );
+
 		//update_post_meta( $post->ID, 'monday_item_id', $item_id );
 	} else if ( $post_status == 'update' ) {
+		//print_r( $post_post_array );
 		$item_id = get_post_item_id( $post->ID );
-		if ( ! empty( $item_id ) ) {
-			foreach ( $item_id as $item ) {
-				$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
-				//error_log( print_r( $status, true ) );
-				if ( $status['data']['change_multiple_column_values']['state'] == 'deleted' ) {
-					delete_post_item_id( $item->itemId );
-					if ( empty( get_item_post_id( $item->itemId ) ) ) {
-						create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
-					}
+		foreach ( $item_id as $item ) {
+			$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
+			//error_log( print_r( $status, true ) );
+			if ( $status['data']['change_multiple_column_values']['state'] == 'deleted' ) {
+				delete_post_item_id( $item->itemId );
+				if ( empty( get_item_post_id( $item->itemId ) ) ) {
+					create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
 				}
 			}
-		} else {
-			create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
 		}
-
 	}
 }
 
@@ -366,7 +363,9 @@ function update_or_create_content_auto_synch( $board_id, $post_array, $post ) {
 					}
 				}
 			} else {
-				create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+				if ( empty( get_item_post_id( $item->itemId ) ) ) {
+					create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+				}
 			}
 		}
 	} else {
@@ -395,3 +394,5 @@ function keys_refresh() {
 }
 
 add_action( 'wp_ajax_keys_refresh', 'keys_refresh' );
+
+

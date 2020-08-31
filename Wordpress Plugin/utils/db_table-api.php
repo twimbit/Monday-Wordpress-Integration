@@ -60,6 +60,20 @@ function get_post_item_id( $postId ) {
 	return $results;
 }
 
+//get board post item ids
+function get_board_post_item_ids( $boardId ) {
+	global $wpdb;
+	$wp_table_name = $wpdb->prefix . 'monday_post';
+
+	$results = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE boardId=$boardId" );
+
+	if ( empty( $results ) ) {
+		return '';
+	}
+
+	return $results;
+}
+
 //get monday user id
 function get_monday_user_id( $wpId ) {
 	global $wpdb;
@@ -216,7 +230,7 @@ function monday_install_data( $clientId, $action, $sub_id, $boardId ) {
 }
 
 //create monday post item id
-function create_monday_post( $subId, $itemId, $postId ) {
+function create_monday_post( $subId, $itemId, $postId, $boardId ) {
 
 	global $wpdb;
 	$wp_table_name = $wpdb->prefix . 'monday_post';
@@ -224,7 +238,8 @@ function create_monday_post( $subId, $itemId, $postId ) {
 		'time'            => current_time( 'mysql' ),
 		"subscription_id" => $subId,
 		"itemId"          => $itemId,
-		"postId"          => $postId
+		"postId"          => $postId,
+		"boardId"         => $boardId
 	) );
 }
 
