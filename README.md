@@ -17,7 +17,8 @@
 
 ## Getting Started
 
-<a href="https://www.youtube.com/watch?v=akRpuZ3ziYc&t=4s"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/Quick%20walkthrough.png" /> </a>
+<a href="https://www.youtube.com/watch?v=wZhuV33cvHc"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/automate.png" /> </a>
+
 
 
 ## Introduction
@@ -25,7 +26,8 @@ This integration lets users synchronize there WordPress site with Monday to crea
 
 ### Steps for Installation
 
-<a href="https://www.youtube.com/watch?v=wZhuV33cvHc"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/automate.png" /> </a>
+<a href="https://www.youtube.com/watch?v=akRpuZ3ziYc&t=4s"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/Quick%20walkthrough.png" /> </a>
+
 
 
 1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip)** .
