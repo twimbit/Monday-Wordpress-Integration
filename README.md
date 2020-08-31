@@ -5,7 +5,7 @@
 </div>
 <br>
 
-[![Twimbit](https://img.shields.io/badge/Powered%20by%20%7C-Twimbit-ef6d6c)](https://twimbit.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/twimbit/wordpress-monday) ![Downloads](https://img.shields.io/github/downloads/twimbit/Monday-Wordpress-Integration/total?label=Downloads)
+[![Twimbit](https://img.shields.io/badge/Powered%20by%20%7C-Twimbit-ef6d6c)](https://twimbit.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/twimbit/Monday-Wordpress-Integration) ![Downloads](https://img.shields.io/github/downloads/twimbit/Monday-Wordpress-Integration/total?label=Downloads)
 
 
 <a href="https://auth.monday.com/oauth2/authorize?client_id=e8ca407267da543d1a1496123679ea4f&response_type=install"> <img alt="Add to monday.com" height="42" src="https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/Tal/4b5d9548-0598-436e-a5b6-9bc5f29ee1d9_Group12441.png" /> </a>
