@@ -26,7 +26,7 @@ This integration lets users synchronize there WordPress site with Monday to crea
 
 ### Steps for Installation
 
-<a href="https://www.youtube.com/watch?v=akRpuZ3ziYc&t=4s"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/Quick%20walkthrough.png" /> </a>
+<a href="https://www.youtube.com/watch?v=akRpuZ3ziYc"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/Quick%20walkthrough.png" /> </a>
 
 
 
