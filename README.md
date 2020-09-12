@@ -16,10 +16,19 @@
 
 
 ## Getting Started
+
+<a href="https://www.youtube.com/watch?v=wZhuV33cvHc"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/automate.png" /> </a>
+
+
+
 ## Introduction
 This integration lets users synchronize there WordPress site with Monday to create efficient workflows and automation. Monday users can synchronize posts, pages, users, comments, and taxonomies from WordPress to Monday and vice versa. This opens a new window of automation opportunity for publishers, content creators, or simply anyone using WordPress to create custom workflows and connect various other platforms without any additional plugin installation on WordPress.
 
 ### Steps for Installation
+
+<a href="https://www.youtube.com/watch?v=akRpuZ3ziYc"> <img alt="Automate your WordPress publishing with Monday.com" height="130"  src="https://github.com/twimbit/Monday-Wordpress-Integration/blob/master/Quick%20walkthrough.png" /> </a>
+
+
 
 1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip)** .
 2. Install the plugin in wordpress by uploading the downloaded folder 
@@ -27,6 +36,8 @@ This integration lets users synchronize there WordPress site with Monday to crea
 4. Go to `wordpress settings > Monday Integration > Integration`
 5. Copy the `API Key` and `API secret` and paste it on the monday integration page and enter site URL without / . eg https://example.com
 6. Authorize the app
+
+
 
 ## Table of Contents
 
