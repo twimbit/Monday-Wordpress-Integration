@@ -10,6 +10,7 @@ function get_board_ids( $action = '' ) {
 	if ( empty( $action ) ) {
 
 		$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name" );
+		$results = array_unique( $results, SORT_REGULAR );
 	} else {
 
 		$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name WHERE action='$action'" );
@@ -152,17 +153,16 @@ function get_item_post_id( $itemId ) {
 //get board id from post item id
 function get_post_item_board_id( $itemId ) {
 	global $wpdb;
-	$wp_table_name_post   = $wpdb->prefix . 'monday_post';
-	$wp_table_name_action = $wpdb->prefix . 'monday_action';
+	$wp_table_name_post = $wpdb->prefix . 'monday_post';
 
-	$subscription_id = $wpdb->get_results( "SELECT subscription_id FROM $wp_table_name_post WHERE itemId=$itemId" )[0]->subscription_id;
-	$results         = $wpdb->get_results( "SELECT boardId FROM $wp_table_name_action WHERE subscription_id=$subscription_id" );
+	$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name_post WHERE itemId=$itemId" )[0]->boardId;
+
 
 	if ( empty( $results ) ) {
 		return '';
 	}
 
-	return $results[0]->boardId;
+	return $results;
 }
 
 //get subscription authorization token

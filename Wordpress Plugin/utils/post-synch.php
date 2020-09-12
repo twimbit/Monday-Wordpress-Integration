@@ -81,6 +81,3 @@ function sync_post() {
 add_action( 'wp_ajax_sync_post', 'sync_post' );
 
 
-
-
-

@@ -457,3 +457,4 @@ function monday_create_comment_item( $commentId, $status, $data ) {
 	}
 }
 
+//print_r( get_monday_term_id( 42 ) );
