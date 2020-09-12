@@ -456,3 +456,4 @@ function monday_create_comment_item( $commentId, $status, $data ) {
 		add_comment_meta( $commentId, 'comment_item_id', $itemId['data']['create_item']['id'] );
 	}
 }
+
