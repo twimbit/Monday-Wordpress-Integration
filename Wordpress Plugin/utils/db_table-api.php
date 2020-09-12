@@ -54,11 +54,16 @@ function get_subscription_ids() {
 }
 
 //get post item id from post id
-function get_post_item_id( $postId, $boardId ) {
+function get_post_item_id( $postId, $boardId = '' ) {
 	global $wpdb;
 	$wp_table_name = $wpdb->prefix . 'monday_post';
 
-	$results = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE postId=$postId AND boardId=$boardId" );
+	if ( empty( $boardId ) ) {
+		$results = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE postId=$postId" );
+	} else {
+		$results = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE postId=$postId AND boardId=$boardId" );
+	}
+
 
 	if ( empty( $results ) ) {
 		return '';

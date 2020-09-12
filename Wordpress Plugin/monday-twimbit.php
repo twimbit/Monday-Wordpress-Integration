@@ -457,3 +457,8 @@ function monday_create_comment_item( $commentId, $status, $data ) {
 	}
 }
 
+sync_post_comments( 354 );
+//print_r( get_comment_meta( 26, 'update_id' ) );
+//if ( ! in_array( '786942197546', get_comment_meta( 26, 'update_id' ) ) ) {
+//	echo 'not exist';
+//}

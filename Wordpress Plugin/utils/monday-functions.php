@@ -241,14 +241,14 @@ function sync_post_comments( $postId ) {
 	) );
 
 	$item_id = get_post_item_id( $postId );
-
 	foreach ( $comments as $comment ) {
-		if ( empty( get_comment_meta( $comment->comment_ID, 'update_id' ) ) ) {
-			$update_id = $monday_mutation->create_update( $item_id, $comment->comment_content );
-			add_comment_meta( $comment->comment_ID, 'update_id', $update_id['data']['create_update']['id'] );
+		foreach ( $item_id as $item ) {
+			if ( ! in_array( $item->itemId, get_comment_meta( $comment->comment_ID, 'update_id' ) ) ) {
+				$update_id = $monday_mutation->create_update( $item->itemId, $comment->comment_content );
+				add_comment_meta( $comment->comment_ID, 'update_id', $update_id['data']['create_update']['id'] );
+			}
 		}
 	}
-
 }
 
 //create monday post
@@ -294,7 +294,7 @@ function update_or_create_content( $board_id, $post_array, $post_status, $post )
 
 	$sub_id = get_subscription_id( $board_id->boardId );
 
-	sync_post_comments( $post->ID );
+	//sync_post_comments( $post->ID );
 
 	//monday board columns
 	$board_columns     = get_option( 'monday_' . $board_id->boardId );
@@ -318,7 +318,7 @@ function update_or_create_content( $board_id, $post_array, $post_status, $post )
 		//update_post_meta( $post->ID, 'monday_item_id', $item_id );
 	} else if ( $post_status == 'update' ) {
 		//print_r( $post_post_array );
-		$item_id = get_post_item_id( $post->ID );
+		$item_id = get_post_item_id( $post->ID, $board_id->boardId );
 		foreach ( $item_id as $item ) {
 			$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
 			//error_log( print_r( $status, true ) );
