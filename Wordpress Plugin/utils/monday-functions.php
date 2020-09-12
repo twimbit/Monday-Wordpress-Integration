@@ -352,43 +352,32 @@ function update_or_create_content_auto_synch( $board_id, $post_array, $post ) {
 		}
 	}
 
-	$item_id = get_post_item_id( $post->ID );
+	$item_id = get_post_item_id( $post->ID, $board_id->boardId );
 
 
 	if ( ! empty( $item_id ) ) {
 		foreach ( $item_id as $item ) {
-			if ( get_post_item_board_id( $item->itemId ) == $board_id->boardId ) {
-
-				if ( empty( get_item_post_id( $item->itemId ) ) ) {
-					create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
-				} else {
-
-					$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
-
-
-					if ( array_key_exists( 'state', $status['data']['change_multiple_column_values'] ) ) {
-						if ( $status['data']['change_multiple_column_values']['state'] == 'deleted' ) {
-							delete_post_item_id( $item->itemId );
-							if ( empty( get_item_post_id( $item->itemId ) ) ) {
-								create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
-							}
-						}
-					} else if ( array_key_exists( 'status_code', $status ) ) {
-						if ( $status['status_code'] == '404' ) {
-							delete_post_item_id( $item->itemId );
-							if ( empty( get_item_post_id( $item->itemId ) ) ) {
-								create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
-							}
+			if ( empty( get_item_post_id( $item->itemId ) ) ) {
+				create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+			} else {
+				$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
+				if ( array_key_exists( 'state', $status['data']['change_multiple_column_values'] ) ) {
+					if ( $status['data']['change_multiple_column_values']['state'] == 'deleted' ) {
+						delete_post_item_id( $item->itemId );
+						if ( empty( get_item_post_id( $item->itemId ) ) ) {
+							create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
 						}
 					}
-
-
-				}
-			} else {
-				if ( empty( get_item_post_id( $item->itemId ) ) ) {
-					create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+				} else if ( array_key_exists( 'status_code', $status ) ) {
+					if ( $status['status_code'] == '404' ) {
+						delete_post_item_id( $item->itemId );
+						if ( empty( get_item_post_id( $item->itemId ) ) ) {
+							create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+						}
+					}
 				}
 			}
+
 		}
 	} else {
 		create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
