@@ -362,3 +362,17 @@ function monday_add_authorize_data( $clientId, $scopes, $expDate, $accessToken )
 
 	return array( 'error' => '' );
 }
+
+//create monday comment item id
+function create_monday_comment( $subId, $mondayId, $wpId, $boardId ) {
+
+	global $wpdb;
+	$wp_table_name = $wpdb->prefix . 'monday_comments';
+	$wpdb->insert( $wp_table_name, array(
+		'time'            => current_time( 'mysql' ),
+		"subscription_id" => $subId,
+		"mondayId"        => $mondayId,
+		"wpId"            => $wpId,
+		"boardId"         => $boardId
+	) );
+}

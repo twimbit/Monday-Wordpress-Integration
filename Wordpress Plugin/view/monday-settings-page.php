@@ -16,9 +16,9 @@ class Monday_Settings_Page {
 			$this,
 			'create_plugin_settings_page'
 		) );
-		add_filter( 'admin_footer_text', 'remove_footer_admin' );
+		add_filter( 'admin_footer_text', 'remove_footer_admin_monday' );
 
-		function remove_footer_admin() { ?>
+		function remove_footer_admin_monday() { ?>
             <span id="footer-thankyou">Twimbit wordpress monday integration <a
                         href="https://github.com/twimbit/monday-wordpress-integration">plugin</a>.</span>
 			<?php
@@ -95,7 +95,7 @@ class Monday_Settings_Page {
         </style>
         <div class="wrap">
             <div class="monday-cover">
-                <img src="<?php echo plugins_url() ?>/monday-twimbit/assets/monday-cover.png"
+                <img src="<?php echo plugin_dir_url( __DIR__ ) ?>assets/monday-cover.png"
                      alt="">
             </div>
 
