@@ -12,7 +12,7 @@
 
 | Plugin | Download file |	
 | ------ | ------ |	
-| Monday Wordpress Integration | [Plugin](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip) |
+| Monday Wordpress Integration | [Plugin](https://github.com/twimbit/Monday-Wordpress-Integration/releases/latest/download/Wordpress-Plugin.zip) |
 
 
 ## Getting Started
@@ -30,9 +30,9 @@ This integration lets users synchronize there WordPress site with Monday to crea
 
 
 
-1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip)** .
+1. Download the latest release  **[Wordpress-Plugin.zip](https://github.com/twimbit/Monday-Wordpress-Integration/releases/latest/download/Wordpress-Plugin.zip)** .
 2. Install the plugin in wordpress by uploading the downloaded folder 
-3. Go to monday.com and choose the desired integration from our app.
+3. Go to monday.com and choose the desired integration from our app.https://github.com/twimbit/Monday-Wordpress-Integration/releases
 4. Go to `wordpress settings > Monday Integration > Integration`
 5. Copy the `API Key` and `API secret` and paste it on the monday integration page and enter site URL without / . eg https://example.com
 6. Authorize the app
