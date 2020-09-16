@@ -10,6 +10,7 @@ function get_board_ids( $action = '' ) {
 	if ( empty( $action ) ) {
 
 		$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name" );
+		$results = array_unique( $results, SORT_REGULAR );
 	} else {
 
 		$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name WHERE action='$action'" );
@@ -53,11 +54,16 @@ function get_subscription_ids() {
 }
 
 //get post item id from post id
-function get_post_item_id( $postId ) {
+function get_post_item_id( $postId, $boardId = '' ) {
 	global $wpdb;
 	$wp_table_name = $wpdb->prefix . 'monday_post';
 
-	$results = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE postId=$postId" );
+	if ( empty( $boardId ) ) {
+		$results = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE postId=$postId" );
+	} else {
+		$results = $wpdb->get_results( "SELECT itemId FROM $wp_table_name WHERE postId=$postId AND boardId=$boardId" );
+	}
+
 
 	if ( empty( $results ) ) {
 		return '';
@@ -152,17 +158,16 @@ function get_item_post_id( $itemId ) {
 //get board id from post item id
 function get_post_item_board_id( $itemId ) {
 	global $wpdb;
-	$wp_table_name_post   = $wpdb->prefix . 'monday_post';
-	$wp_table_name_action = $wpdb->prefix . 'monday_action';
+	$wp_table_name_post = $wpdb->prefix . 'monday_post';
 
-	$subscription_id = $wpdb->get_results( "SELECT subscription_id FROM $wp_table_name_post WHERE itemId=$itemId" )[0]->subscription_id;
-	$results         = $wpdb->get_results( "SELECT boardId FROM $wp_table_name_action WHERE subscription_id=$subscription_id" );
+	$results = $wpdb->get_results( "SELECT boardId FROM $wp_table_name_post WHERE itemId=$itemId" )[0]->boardId;
+
 
 	if ( empty( $results ) ) {
 		return '';
 	}
 
-	return $results[0]->boardId;
+	return $results;
 }
 
 //get subscription authorization token
@@ -356,4 +361,18 @@ function monday_add_authorize_data( $clientId, $scopes, $expDate, $accessToken )
 	}
 
 	return array( 'error' => '' );
+}
+
+//create monday comment item id
+function create_monday_comment( $subId, $mondayId, $wpId, $boardId ) {
+
+	global $wpdb;
+	$wp_table_name = $wpdb->prefix . 'monday_comments';
+	$wpdb->insert( $wp_table_name, array(
+		'time'            => current_time( 'mysql' ),
+		"subscription_id" => $subId,
+		"mondayId"        => $mondayId,
+		"wpId"            => $wpId,
+		"boardId"         => $boardId
+	) );
 }

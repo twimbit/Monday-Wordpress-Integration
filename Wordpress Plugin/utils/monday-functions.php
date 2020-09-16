@@ -1,4 +1,5 @@
 <?php
+
 //generate hash
 function generate_hash( $data ) {
 
@@ -240,14 +241,14 @@ function sync_post_comments( $postId ) {
 	) );
 
 	$item_id = get_post_item_id( $postId );
-
 	foreach ( $comments as $comment ) {
-		if ( empty( get_comment_meta( $comment->comment_ID, 'update_id' ) ) ) {
-			$update_id = $monday_mutation->create_update( $item_id, $comment->comment_content );
-			add_comment_meta( $comment->comment_ID, 'update_id', $update_id['data']['create_update']['id'] );
+		foreach ( $item_id as $item ) {
+			if ( ! in_array( $item->itemId, get_comment_meta( $comment->comment_ID, 'update_id' ) ) ) {
+				$update_id = $monday_mutation->create_update( $item->itemId, $comment->comment_content );
+				add_comment_meta( $comment->comment_ID, 'update_id', $update_id['data']['create_update']['id'] );
+			}
 		}
 	}
-
 }
 
 //create monday post
@@ -293,7 +294,7 @@ function update_or_create_content( $board_id, $post_array, $post_status, $post )
 
 	$sub_id = get_subscription_id( $board_id->boardId );
 
-	sync_post_comments( $post->ID );
+	//sync_post_comments( $post->ID );
 
 	//monday board columns
 	$board_columns     = get_option( 'monday_' . $board_id->boardId );
@@ -317,7 +318,7 @@ function update_or_create_content( $board_id, $post_array, $post_status, $post )
 		//update_post_meta( $post->ID, 'monday_item_id', $item_id );
 	} else if ( $post_status == 'update' ) {
 		//print_r( $post_post_array );
-		$item_id = get_post_item_id( $post->ID );
+		$item_id = get_post_item_id( $post->ID, $board_id->boardId );
 		foreach ( $item_id as $item ) {
 			$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
 			//error_log( print_r( $status, true ) );
@@ -351,28 +352,32 @@ function update_or_create_content_auto_synch( $board_id, $post_array, $post ) {
 		}
 	}
 
-	$item_id = get_post_item_id( $post->ID );
+	$item_id = get_post_item_id( $post->ID, $board_id->boardId );
+
 
 	if ( ! empty( $item_id ) ) {
 		foreach ( $item_id as $item ) {
-			if ( get_post_item_board_id( $item->itemId ) == $board_id->boardId ) {
-				if ( empty( get_item_post_id( $item->itemId ) ) ) {
-					create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
-				} else {
-
-					$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
+			if ( empty( get_item_post_id( $item->itemId ) ) ) {
+				create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+			} else {
+				$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
+				if ( array_key_exists( 'state', $status['data']['change_multiple_column_values'] ) ) {
 					if ( $status['data']['change_multiple_column_values']['state'] == 'deleted' ) {
 						delete_post_item_id( $item->itemId );
 						if ( empty( get_item_post_id( $item->itemId ) ) ) {
 							create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
 						}
 					}
-				}
-			} else {
-				if ( empty( get_item_post_id( $item->itemId ) ) ) {
-					create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+				} else if ( array_key_exists( 'status_code', $status ) ) {
+					if ( $status['status_code'] == '404' ) {
+						delete_post_item_id( $item->itemId );
+						if ( empty( get_item_post_id( $item->itemId ) ) ) {
+							create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+						}
+					}
 				}
 			}
+
 		}
 	} else {
 		create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
@@ -401,4 +406,63 @@ function keys_refresh() {
 
 add_action( 'wp_ajax_keys_refresh', 'keys_refresh' );
 
+//create page or post
+function process_post_or_page( $type, $board_id ) {
 
+	$args = array(
+		'numberposts' => - 1,
+		'post_type'   => array( $type ),
+		'orderby'     => 'title',
+		'order'       => 'ASC',
+		'post_status' => array( 'pending', 'draft', 'future', 'publish' )
+	);
+
+	$posts_array = get_posts( $args );
+
+	foreach ( $posts_array as $post ) {
+
+		//sync post comments
+		//sync_post_comments( $post->ID );
+
+		// get post tags
+		$tags = get_post_tags_array( $post->ID );
+
+		// get post categories
+		$categories = get_post_categories_array( $post->ID );
+
+		if ( $post->post_status == 'publish' ) {
+			$status = 1;
+		} else {
+			$status = 0;
+		}
+
+		if ( empty( get_monday_user_id( $post->post_author ) ) ) {
+			$authors = array();
+		} else {
+			$authors = array(
+				array(
+					'id'   => get_monday_user_id( $post->post_author ),
+					'kind' => 'person'
+				)
+			);
+		}
+
+		$post_array = array(
+			'name'      => $post->post_title,
+			'author'    => array(
+				'personsAndTeams' => $authors
+			),
+			'tags'      => array( 'tag_ids' => $tags ),
+			'category'  => array( 'tag_ids' => $categories ),
+			'status'    => array( 'index' => $status ),
+			'date'      => array(
+				'date' => get_the_date( 'Y-m-d', $post->ID ),
+				'time' => get_the_time( 'G:i:s', $post->ID )
+			),
+			'post_link' => array( 'url' => get_post_permalink( $post->ID ), 'text' => $post->post_title ),
+		);
+
+		update_or_create_content_auto_synch( $board_id, $post_array, $post );
+
+	}
+}

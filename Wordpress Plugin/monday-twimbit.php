@@ -78,9 +78,10 @@ function monday_install() {
 		"CREATE TABLE $table_name[2] (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		subscription_id bigint(20) NOT NULL,
+		subscription_id bigint(20),
 		mondayId int(11) NOT NULL,
 		wpId int(11) NOT NULL,
+		boardId int(11) NOT NULL,
 		PRIMARY KEY  (id)
 	) $charset_collate;",
 		"CREATE TABLE $table_name[3] (
@@ -415,6 +416,8 @@ function update_or_create( $post_id ) {
 	$post_update = strtotime( $post->post_modified );
 
 
+	error_log( print_r( $post, true ) );
+
 	//for post create
 	if ( $post_date == $post_update && $post->post_status != 'auto-draft' ) {
 		if ( ! empty( get_post_meta( $post->ID, 'post_status' ) ) ) {
@@ -452,7 +455,7 @@ add_action( 'comment_post', 'monday_create_comment_item', 10, 3 );
 function monday_create_comment_item( $commentId, $status, $data ) {
 	global $monday_mutation;
 	foreach ( get_board_ids( 'create_comment' ) as $board_id ) {
-		$itemId = $monday_mutation->create_item( $board_id->boardId, array(), $data['comment_content'] );
-		add_comment_meta( $commentId, 'comment_item_id', $itemId['data']['create_item']['id'] );
+		$itemId = $monday_mutation->create_item( $board_id->boardId, array(), $data['comment_content'] )['data']['create_item']['id'];
+		create_monday_comment( '', $itemId, $commentId, $board_id->boardId );
 	}
 }
