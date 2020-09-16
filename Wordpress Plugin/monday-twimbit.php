@@ -3,7 +3,7 @@
 Plugin Name: Monday Wordpress Integration
 Plugin URI: https://github.com/twimbit/monday-wordpress-integration
 Description: Automated WordPress by integrating with Monday.
-Version: 0.1
+Version: 0.1.1
 Author: twimbit
 Author URI: https://twimbit.com
 License: MIT
