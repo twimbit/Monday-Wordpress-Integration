@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Monday Wordpress Integration
+Plugin Name: Monday Integration
 Plugin URI: https://github.com/twimbit/monday-wordpress-integration
 Description: Automated WordPress by integrating with Monday.
 Version: 0.1.1
