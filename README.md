@@ -121,4 +121,6 @@ Collaborate with us on creating more integrations and future scopes for monday a
 
 Any questions, please refer to our license [doc](https://github.com/twimbit/monday-wordpress-integration/blob/master/LICENSE)  or email aman@twimbit.com
 
+Part of [(twimbit opensource)](https://opensource.twimbit.com) 
+
 
