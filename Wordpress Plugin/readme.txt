@@ -1,6 +1,7 @@
 === monday.com integration ===
 Contributors: twimbit, siddhantd, amanintech
 Tags: monday.com, automation, integration
+Donate link: https://github.com/twimbit/Monday-Wordpress-Integration
 Requires at least: 3.0.0
 Tested up to: 5.5.1
 Requires PHP: 7.0.0
