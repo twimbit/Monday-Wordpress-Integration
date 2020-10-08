@@ -416,7 +416,7 @@ function update_or_create( $post_id ) {
 	$post_update = strtotime( $post->post_modified );
 
 
-	error_log( print_r( $post, true ) );
+	//error_log( print_r( $post, true ) );
 
 	//for post create
 	if ( $post_date == $post_update && $post->post_status != 'auto-draft' ) {
@@ -459,3 +459,4 @@ function monday_create_comment_item( $commentId, $status, $data ) {
 		create_monday_comment( '', $itemId, $commentId, $board_id->boardId );
 	}
 }
+

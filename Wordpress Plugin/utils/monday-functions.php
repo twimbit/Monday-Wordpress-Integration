@@ -65,8 +65,8 @@ function create_monday_columns() {
 			array( 'column_name' => 'Author', 'column_type' => 'people', 'column_id' => '' ),
 			array( 'column_name' => 'Tags', 'column_type' => 'tags', 'column_id' => '' ),
 			array( 'column_name' => 'Category', 'column_type' => 'tags', 'column_id' => '' ),
-			array( 'column_name' => 'Status', 'column_type' => 'status', 'column_id' => '' ),
-			array( 'column_name' => 'Date', 'column_type' => 'date', 'column_id' => '' ),
+			array( 'column_name' => 'Content Status', 'column_type' => 'status', 'column_id' => '' ),
+			array( 'column_name' => 'Creation date', 'column_type' => 'date', 'column_id' => '' ),
 			array( 'column_name' => 'Post Link', 'column_type' => 'link', 'column_id' => '' ),
 		);
 
@@ -319,16 +319,22 @@ function update_or_create_content( $board_id, $post_array, $post_status, $post )
 	} else if ( $post_status == 'update' ) {
 		//print_r( $post_post_array );
 		$item_id = get_post_item_id( $post->ID, $board_id->boardId );
-		foreach ( $item_id as $item ) {
-			$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
-			//error_log( print_r( $status, true ) );
-			if ( $status['data']['change_multiple_column_values']['state'] == 'deleted' ) {
-				delete_post_item_id( $item->itemId );
-				if ( empty( get_item_post_id( $item->itemId ) ) ) {
-					create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+		if ( ! empty( $item_id ) ) {
+			foreach ( $item_id as $item ) {
+				$status = $monday_mutation->change_multiple_column_values( $board_id->boardId, $post_post_array, $item->itemId );
+				//error_log( print_r( $status, true ) );
+				if ( $status['data']['change_multiple_column_values']['state'] == 'deleted' ) {
+					delete_post_item_id( $item->itemId );
+					if ( empty( get_item_post_id( $item->itemId ) ) ) {
+						create_monday_post_item_function( $board_id->boardId, $post_post_array, $post->post_title, $sub_id, $post->ID );
+					}
 				}
 			}
+		} else {
+			$item_id = $monday_mutation->create_item( $board_id->boardId, $post_post_array, $post->post_title )['data']['create_item']['id'];
+			create_monday_post( $sub_id, $item_id, $post->ID, $board_id->boardId );
 		}
+
 	}
 }
 
