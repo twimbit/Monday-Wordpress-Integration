@@ -87,6 +87,20 @@ class MONDAY_GRAPHQL_QUERY {
 		return $result['data']['items'][0];
 	}
 
+	//get monday item specific column row value
+	public function get_monday_item_column_value( $itemId, $columnId ) {
+		$query  = 'query MyQuery {
+  items(ids:' . $itemId . ') {
+    column_values(ids: "' . $columnId . '") {
+      value
+    }
+  }
+}';
+		$result = $this->request_monday( $query )['data']['items'][0]['column_values'][0]['value'];;
+
+		return json_decode( $result )->personsAndTeams[0]->id;
+	}
+
 }
 
 global $token;

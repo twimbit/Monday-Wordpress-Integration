@@ -219,6 +219,7 @@ function wp_validate( $req ) {
 
 //creating post by monday
 function create_post( $req ) {
+
 	$app_key    = $req['APIKey'];
 	$app_secret = $req['APISecret'];
 
@@ -229,12 +230,12 @@ function create_post( $req ) {
 
 	if ( $check ) {
 
-
 		global $monday_query;
 		$monday_item = $monday_query->get_monday_item( $itemId );
 
 		$wp_user_id = get_wp_user_id( $monday_item['creator']['id'] );
-		if ( empty( $user_id ) ) {
+
+		if ( empty( $wp_user_id ) ) {
 			$wp_user_id = 1;
 		}
 
@@ -243,8 +244,13 @@ function create_post( $req ) {
 		if ( empty( get_check_item_id( $itemId ) ) ) {
 			$post_id = wp_insert_post( array( 'post_title' => $monday_item['name'], 'post_author' => $wp_user_id ) );
 			create_monday_post( '', $itemId, $post_id, $monday_item['board']['id'] );
+
+			wp_update_post( array(
+				'ID' => $post_id
+			) );
 		}
 		add_action( 'save_post_post', 'update_or_create' );
+
 		wp_send_json( array( 'success' => true ) );
 	}
 
@@ -459,4 +465,5 @@ function monday_create_comment_item( $commentId, $status, $data ) {
 		create_monday_comment( '', $itemId, $commentId, $board_id->boardId );
 	}
 }
+
 
