@@ -12,7 +12,7 @@
 
 | Plugin | Download file |	
 | ------ | ------ |	
-| Monday Wordpress Integration | [Plugin](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip) |
+| Monday Wordpress Integration | [Plugin](https://github.com/twimbit/Monday-Wordpress-Integration/releases/latest/download/monday-integration.zip) |
 
 
 ## Getting Started
@@ -30,7 +30,7 @@ This integration lets users synchronize there WordPress site with Monday to crea
 
 
 
-1. Download this **[.zip file](https://github.com/twimbit/monday-wordpress-integration/releases/download/0.1-beta/Wordpress-Plugin.zip)** .
+1. Download the latest release  **[Wordpress-Plugin.zip](https://github.com/twimbit/Monday-Wordpress-Integration/releases/latest/download/monday-integration.zip)** .
 2. Install the plugin in wordpress by uploading the downloaded folder 
 3. Go to monday.com and choose the desired integration from our app.
 4. Go to `wordpress settings > Monday Integration > Integration`
@@ -116,18 +116,11 @@ Collaborate with us on creating more integrations and future scopes for monday a
 | Shalini Bose [(@shalinibose)](https://github.com/shalinibose) 
 
 
-### License
-MIT License
+### Contact
 
-Copyright (c) 2020 Twimbit
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 
 Any questions, please refer to our license [doc](https://github.com/twimbit/monday-wordpress-integration/blob/master/LICENSE)  or email aman@twimbit.com
+
+Part of [(twimbit opensource)](https://opensource.twimbit.com) 
 
 

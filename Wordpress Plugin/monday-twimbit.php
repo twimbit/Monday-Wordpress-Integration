@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Monday Wordpress Integration
+Plugin Name: Monday.com Integration
 Plugin URI: https://github.com/twimbit/monday-wordpress-integration
 Description: Automated WordPress by integrating with Monday.
-Version: 0.1
+Version: 0.1.1
 Author: twimbit
 Author URI: https://twimbit.com
 License: MIT
@@ -219,7 +219,6 @@ function wp_validate( $req ) {
 
 //creating post by monday
 function create_post( $req ) {
-
 	$app_key    = $req['APIKey'];
 	$app_secret = $req['APISecret'];
 
@@ -250,7 +249,6 @@ function create_post( $req ) {
 			) );
 		}
 		add_action( 'save_post_post', 'update_or_create' );
-
 		wp_send_json( array( 'success' => true ) );
 	}
 
@@ -465,5 +463,3 @@ function monday_create_comment_item( $commentId, $status, $data ) {
 		create_monday_comment( '', $itemId, $commentId, $board_id->boardId );
 	}
 }
-
-
