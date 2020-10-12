@@ -427,8 +427,6 @@ function update_or_create( $post_id ) {
 	$post_date   = strtotime( $post->post_date );
 	$post_update = strtotime( $post->post_modified );
 
-	error_log( print_r( $post, true ) );
-
 	//for post create
 	if ( $post_date == $post_update && $post->post_status != 'auto-draft' && $post->post_status != 'trash' ) {
 		if ( ! empty( get_post_meta( $post->ID, 'post_status' ) ) ) {
