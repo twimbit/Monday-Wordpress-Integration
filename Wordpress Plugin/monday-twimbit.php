@@ -247,12 +247,13 @@ function create_post( $req ) {
 		}
 		add_action( 'save_post_post', 'update_or_create' );
 
-		update_post_meta( $post_id, 'post_status', 'draft' );
+		if ( empty( get_check_item_id( $itemId ) ) ) {
+			update_post_meta( $post_id, 'post_status', 'draft' );
+			wp_update_post( array(
+				'ID' => $post_id
+			) );
+		}
 
-		wp_update_post( array(
-			'post_status' => 'draft',
-			'ID'          => $post_id
-		) );
 
 		wp_send_json( array( 'success' => true ) );
 	}
@@ -426,6 +427,7 @@ function update_or_create( $post_id ) {
 
 	$post_date   = strtotime( $post->post_date );
 	$post_update = strtotime( $post->post_modified );
+
 
 	//for post create
 	if ( $post_date == $post_update && $post->post_status != 'auto-draft' && $post->post_status != 'trash' ) {
