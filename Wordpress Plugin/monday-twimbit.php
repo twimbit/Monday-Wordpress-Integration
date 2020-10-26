@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Monday.com Integration
+Plugin Name: Monday Wordpress Integration
 Plugin URI: https://github.com/twimbit/monday-wordpress-integration
 Description: Automated WordPress by integrating with Monday.
-Version: 0.1.1
+Version: 0.1
 Author: twimbit
 Author URI: https://twimbit.com
 License: MIT
@@ -219,6 +219,7 @@ function wp_validate( $req ) {
 
 //creating post by monday
 function create_post( $req ) {
+
 	$app_key    = $req['APIKey'];
 	$app_secret = $req['APISecret'];
 
@@ -229,22 +230,30 @@ function create_post( $req ) {
 
 	if ( $check ) {
 
-
 		global $monday_query;
 		$monday_item = $monday_query->get_monday_item( $itemId );
 
 		$wp_user_id = get_wp_user_id( $monday_item['creator']['id'] );
-		if ( empty( $user_id ) ) {
+
+		if ( empty( $wp_user_id ) ) {
 			$wp_user_id = 1;
 		}
 
 		remove_action( 'save_post_post', 'update_or_create' );
+		$post_id = 0;
 
 		if ( empty( get_check_item_id( $itemId ) ) ) {
 			$post_id = wp_insert_post( array( 'post_title' => $monday_item['name'], 'post_author' => $wp_user_id ) );
 			create_monday_post( '', $itemId, $post_id, $monday_item['board']['id'] );
+
+			add_action( 'save_post_post', 'update_or_create' );
+
+			update_post_meta( $post_id, 'post_status', 'draft' );
+			wp_update_post( array(
+				'ID' => $post_id
+			) );
 		}
-		add_action( 'save_post_post', 'update_or_create' );
+
 		wp_send_json( array( 'success' => true ) );
 	}
 
@@ -271,12 +280,15 @@ function change_post_status( $req ) {
 			$wp_post_status = 'draft';
 		}
 		remove_action( 'save_post_post', 'update_or_create' );
+
 		wp_update_post( array(
+			'post_type'   => 'post',
 			'post_status' => $wp_post_status,
 			'ID'          => $post_id
 		) );
 
 		add_action( 'save_post_post', 'update_or_create' );
+
 		wp_send_json( array( 'success' => true ) );
 	}
 
@@ -416,16 +428,13 @@ function update_or_create( $post_id ) {
 	$post_update = strtotime( $post->post_modified );
 
 
-	error_log( print_r( $post, true ) );
-
 	//for post create
-	if ( $post_date == $post_update && $post->post_status != 'auto-draft' ) {
+	if ( $post_date == $post_update && $post->post_status != 'auto-draft' && $post->post_status != 'trash' ) {
 		if ( ! empty( get_post_meta( $post->ID, 'post_status' ) ) ) {
 			create_monday_post_item( $post_id, 'update' );
 		} else {
 			create_monday_post_item( $post_id, 'create' );
 		}
-
 		if ( $post->post_status == 'draft' ) {
 			update_post_meta( $post->ID, 'post_status', 'draft' );
 		}
@@ -459,3 +468,4 @@ function monday_create_comment_item( $commentId, $status, $data ) {
 		create_monday_comment( '', $itemId, $commentId, $board_id->boardId );
 	}
 }
+
