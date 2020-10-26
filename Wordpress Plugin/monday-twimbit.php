@@ -241,19 +241,18 @@ function create_post( $req ) {
 
 		remove_action( 'save_post_post', 'update_or_create' );
 		$post_id = 0;
+
 		if ( empty( get_check_item_id( $itemId ) ) ) {
 			$post_id = wp_insert_post( array( 'post_title' => $monday_item['name'], 'post_author' => $wp_user_id ) );
 			create_monday_post( '', $itemId, $post_id, $monday_item['board']['id'] );
-		}
-		add_action( 'save_post_post', 'update_or_create' );
 
-		if ( empty( get_check_item_id( $itemId ) ) ) {
+			add_action( 'save_post_post', 'update_or_create' );
+
 			update_post_meta( $post_id, 'post_status', 'draft' );
 			wp_update_post( array(
 				'ID' => $post_id
 			) );
 		}
-
 
 		wp_send_json( array( 'success' => true ) );
 	}
